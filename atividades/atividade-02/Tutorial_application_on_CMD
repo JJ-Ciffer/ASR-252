@@ -1,0 +1,50 @@
+C:\Users\jairo>ssh-keygen -t rsa -b 4096 -C jairo.jackson.souza05@aluno.ifce.edu.br
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\jairo/.ssh/id_rsa): C:\Users\jairo\Downloads
+C:\Users\jairo\Downloads already exists.
+Overwrite (y/n)? n
+
+C:\Users\jairo>ssh-keygen -t rsa -b 4096 -C jairo.jackson.souza05@aluno.ifce.edu.br
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\jairo/.ssh/id_rsa):
+Created directory 'C:\\Users\\jairo/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\jairo/.ssh/id_rsa
+Your public key has been saved in C:\Users\jairo/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:eW1fYADSTQnVTfaSNms/L2HwS9uaFVI3OeciesCMsq8 jairo.jackson.souza05@aluno.ifce.edu.br
+The key's randomart image is:
++---[RSA 4096]----+
+|        ..o*+o oo|
+|         .. o..o+|
+|              B=+|
+|         = ..o.*=|
+|      . S = +++.o|
+|       o . + +*+.|
+|      .   . .o.*o|
+|       .   .  +o+|
+|      E..     oo.|
++----[SHA256]-----+
+
+C:\Users\jairo>type .ssh\id_rsa.pub
+ssh-rsaAAAAB3NzaC1yc2EAAAADAQABAAACAQC7K8KRhIMnthvMSB7GCSxO32hIrtzMs4QvKkNyoiYwbxIao20q6O0c3HzS9QlJmWSQgMq95BJyNfOs4I99J2TZUydAFUajZpvTq06h2Qax4rnPC7HrAm/6huPymT0IcGYhrdSV1BW4rUsaNWwHKgc6sRypYL6+X9X61HB0yfITT+aD3hwVqQsr/A147fOMYEblHqkvoa+VI4lnJO8YJ+ZLcA5ZyhbqZptrph2hivkV4HjQAsuQ9owa2+1Mlt04s6tnMYiLF0St+m7s4RW2XjwEIJBiH/JvcSHyg4NmMdd5EXcHP0jhEOM3jHbfy9Y3J+pdCOvRvE4Xx+NEJM5RyHQ30h8B80Y5e54rp5HXHzyS3mx2DOVQmFwGyy/O1imGREoRzQcV2wpNXvRISCi3g/l9s1VWm1LRu3F/xmHGO3MPfcqrDWbE//fORW8Ye1+d0N/GW60PjICS4m1jvfi2d917UDIC7O+MSqKV+4qYx//BDD6dqVdB412dC4I9WHYZqM4D/r3qoIYbKg9v3nGhcAlYMqU2z81rH1K2wSXBxAD/hTmkVQxcUk4Lz2yHM5fbsJeAScbLq5VUMeutxvnc/H0y8zZtOVdTJiEo45Y2IcgCVLPvJyhPc0NhBcpeSR2QDeX4O25m89GNpJPU84h4Emf3gA4/KS/W9ckihTG90XsuWQ== jairo.jackson.souza05@aluno.ifce.edu.br
+
+C:Users\jairo>net start ssh-agent
+
+O serviço de OpenSSH Authentication Agent foi iniciado com êxito.
+
+C:\Users\jairo>ssh-add .ssh\id_rsa
+Enter passphrase for .ssh\id_rsa:
+Identity added: .ssh\id_rsa (jairo.jackson.souza05@aluno.ifce.edu.br)
+
+C:\Users\jairo>ssh -T git@github.com
+The authenticity of host 'github.com (4.228.31.150)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Connection reset by 4.228.31.150 port 22
+
+C:\Users\jairo>ssh -T git@github.com
+Hi JJ-Ciffer! You've successfully authenticated, but GitHub does not provide shell access.
