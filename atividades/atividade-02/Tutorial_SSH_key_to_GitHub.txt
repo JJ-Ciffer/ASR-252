@@ -1,0 +1,19 @@
+1. Gere um par de chaves SSH
+
+Em seu computador, abra um terminal (ou Git Bash para Windows). Digite o comando: ssh-keygen -t rsa -b 4096 -C "seu_email@exemplo.com" (substitua pelo seu email, sem as aspas) e siga as instruções para definir um nome para o arquivo e uma senha, se desejar.
+
+2. Adicione a chave pública ao GitHub
+
+No terminal, use o comando type .ssh\id_rsa.pub para exibir sua chave pública e a copie. 
+Vá para as configurações do GitHub: No site do GitHub, clique na sua foto de perfil, depois em "Settings" (Configurações). 
+Adicione a chave: Na barra lateral, clique em "SSH and GPG keys" (Chaves SSH e GPG) e depois em "New SSH key" (Nova chave SSH) ou "Add SSH key" (Adicionar chave SSH). 
+Cole e salve: Cole sua chave pública no campo "Key" (Chave), adicione um título descritivo e clique em "Add SSH key". 
+
+3. Adicione a chave privada ao SSH-Agent 
+
+Inicie o SSH-Agent: No terminal, digite net start ssh-agent para iniciar o agente.
+Adicione a chave: Execute o comando ssh-add C:\Users\SEU_USUARIO\.ssh\id_rsa (substitua id_rsa pelo nome do seu arquivo de chave privada, se diferente) para adicionar sua chave privada ao agente.
+
+4. Teste a conexão 
+
+Verifique a conexão: No terminal, digite ssh -T git@github.com para testar a conexão com o GitHub. Se a conexão for bem-sucedida, você verá uma mensagem de boas-vindas e será solicitado a confirmar o acesso.
