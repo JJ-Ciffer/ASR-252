@@ -1,0 +1,164 @@
+1) Verificar se o pacote ssh está instalado:
+-------------------------------------------------------------------
+$ sudo dpkg -l | less | grep ssh
+ii  libssh-4:amd64                                 0.10.5-2                             amd64        tiny C SSH library (OpenSSL flavor)
+ii  libssh-gcrypt-4:amd64                          0.10.5-2                             amd64        tiny C SSH library (gcrypt flavor)
+ii  libssh2-1:amd64                                1.11.0-2                             amd64        SSH2 client-side library
+ii  openssh-client                                 1:9.3p2-1                            amd64        secure shell (SSH) client, for secure access to remote machines
+ii  openssh-server                                 1:9.3p2-1                            amd64        secure shell (SSH) server, for secure access from remote machines
+ii  openssh-sftp-server                            1:9.3p2-1                            amd64        secure shell (SSH) sftp server module, for SFTP access from remote machines
+ii  python3-paramiko                               2.12.0-2                             all          Make ssh v2 connections (Python 3)
+
+
+2) Verificar se o serviço ssh está rodando:
+-------------------------------------------------------------------
+$ sudo systemctl status ssh
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: disab>
+     Active: active (running) since Wed 2025-09-24 00:05:20 UTC; 8min ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 644 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCE>
+   Main PID: 721 (sshd)
+      Tasks: 1 (limit: 4600)
+     Memory: 4.4M
+        CPU: 29ms
+     CGroup: /system.slice/ssh.service
+             └─721 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Sep 24 00:05:19 Kali systemd[1]: Starting ssh.service - OpenBSD Secure Shell>
+Sep 24 00:05:20 Kali sshd[721]: Server listening on 0.0.0.0 port 22.
+Sep 24 00:05:20 Kali sshd[721]: Server listening on :: port 22.
+Sep 24 00:05:20 Kali systemd[1]: Started ssh.service - OpenBSD Secure Shell >
+lines 1-17/17 (END)...skipping...
+● ssh.service - OpenBSD Secure Shell server                                  
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: disab>
+     Active: active (running) since Wed 2025-09-24 00:05:20 UTC; 8min ago    
+       Docs: man:sshd(8)                                                     
+             man:sshd_config(5)                                              
+    Process: 644 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCE>
+   Main PID: 721 (sshd)                                                      
+      Tasks: 1 (limit: 4600)                                                 
+     Memory: 4.4M                                                            
+        CPU: 29ms
+     CGroup: /system.slice/ssh.service
+             └─721 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Sep 24 00:05:19 Kali systemd[1]: Starting ssh.service - OpenBSD Secure Shell>
+Sep 24 00:05:20 Kali sshd[721]: Server listening on 0.0.0.0 port 22.
+Sep 24 00:05:20 Kali sshd[721]: Server listening on :: port 22.
+Sep 24 00:05:20 Kali systemd[1]: Started ssh.service - OpenBSD Secure Shell >
+
+
+3) Instalar SSH Server:
+----------------------------------
+$ sudo apt update
+Get:1 https://download.docker.com/linux/debian buster InRelease [53.9 kB]
+Get:2 https://download.docker.com/linux/debian buster/stable amd64 Packages [53.7 kB]
+Get:3 http://kali.download/kali kali-rolling InRelease [41.5 kB] 
+Err:3 http://kali.download/kali kali-rolling InRelease
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY ED65462EC8D5E4C5
+Fetched 149 kB in 2s (67.4 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+11 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: http://kali.download/kali kali-rolling InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY ED65462EC8D5E4C5
+W: Failed to fetch http://http.kali.org/kali/dists/kali-rolling/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY ED65462EC8D5E4C5
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+
+
+$ sudo apt upgrade
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+The following packages have been kept back:
+  libncurses-dev libncurses6 libncursesw6 libtinfo6 ncurses-bin
+The following packages will be upgraded:
+  containerd.io docker-buildx-plugin docker-ce docker-ce-cli
+  docker-ce-rootless-extras docker-compose-plugin
+6 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+Need to get 121 MB of archives.
+After this operation, 19.9 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 https://download.docker.com/linux/debian buster/stable amd64 containerd.io amd64 1.6.33-1 [30.0 MB]
+Get:2 https://download.docker.com/linux/debian buster/stable amd64 docker-buildx-plugin amd64 0.14.1-1~debian.10~buster [29.6 MB]
+Get:3 https://download.docker.com/linux/debian buster/stable amd64 docker-ce-cli amd64 5:26.1.4-1~debian.10~buster [14.6 MB]
+Get:4 https://download.docker.com/linux/debian buster/stable amd64 docker-ce amd64 5:26.1.4-1~debian.10~buster [25.2 MB]
+Get:5 https://download.docker.com/linux/debian buster/stable amd64 docker-ce-rootless-extras amd64 5:26.1.4-1~debian.10~buster [9325 kB]
+Get:6 https://download.docker.com/linux/debian buster/stable amd64 docker-compose-plugin amd64 2.27.1-1~debian.10~buster [12.5 MB]
+Fetched 121 MB in 2s (68.0 MB/s)                
+(Reading database ... 406931 files and directories currently installed.)
+Preparing to unpack .../0-containerd.io_1.6.33-1_amd64.deb ...
+Unpacking containerd.io (1.6.33-1) over (1.6.22-1) ...
+Preparing to unpack .../1-docker-buildx-plugin_0.14.1-1~debian.10~buster_amd64.deb ...
+Unpacking docker-buildx-plugin (0.14.1-1~debian.10~buster) over (0.11.2-1~debian.10~buster) ...
+Preparing to unpack .../2-docker-ce-cli_5%3a26.1.4-1~debian.10~buster_amd64.deb ...
+Unpacking docker-ce-cli (5:26.1.4-1~debian.10~buster) over (5:24.0.5-1~debian.10~buster) ...
+Preparing to unpack .../3-docker-ce_5%3a26.1.4-1~debian.10~buster_amd64.deb ...
+Unpacking docker-ce (5:26.1.4-1~debian.10~buster) over (5:24.0.5-1~debian.10~buster) ...
+Preparing to unpack .../4-docker-ce-rootless-extras_5%3a26.1.4-1~debian.10~buster_amd64.deb ...
+Unpacking docker-ce-rootless-extras (5:26.1.4-1~debian.10~buster) over (5:24.0.5-1~debian.10~buster) ...
+Preparing to unpack .../5-docker-compose-plugin_2.27.1-1~debian.10~buster_amd64.deb ...
+Unpacking docker-compose-plugin (2.27.1-1~debian.10~buster) over (2.20.2-1~debian.10~buster) ...
+Setting up docker-buildx-plugin (0.14.1-1~debian.10~buster) ...
+Setting up containerd.io (1.6.33-1) ...
+Setting up docker-compose-plugin (2.27.1-1~debian.10~buster) ...
+Setting up docker-ce-cli (5:26.1.4-1~debian.10~buster) ...
+Setting up docker-ce-rootless-extras (5:26.1.4-1~debian.10~buster) ...
+Setting up docker-ce (5:26.1.4-1~debian.10~buster) ...
+Installing new version of config file /etc/init.d/docker ...
+Processing triggers for man-db (2.11.2-3) ...
+Processing triggers for kali-menu (2023.3.3) ...
+
+$ sudo apt install openssh-server
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+openssh-server is already the newest version (1:9.3p2-1).
+openssh-server set to manually installed.
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+
+
+4) Comandos para startar/parar/restartar/verificar status do serviço sshd:
+---------------------------------------------------------------
+$ sudo systemctl start ssh.service ## <-- Linux start sshd ##
+##sem resposta visual##
+$ sudo systemctl stop ssh.service ## <-- stop the server ##
+##sem resposta visual##
+$ sudo systemctl restart ssh.service ## <-- restart the server ##
+##sem resposta visual##
+$ sudo systemctl status ssh.service ## <-- Get the current status of the server ##
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: disabled)
+     Active: active (running) since Wed 2025-09-24 00:25:11 UTC; 18s ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 27715 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 27716 (sshd)
+      Tasks: 1 (limit: 4600)
+     Memory: 1.9M
+        CPU: 27ms
+     CGroup: /system.slice/ssh.service
+             └─27716 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Sep 24 00:25:11 Kali systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Sep 24 00:25:11 Kali sshd[27716]: Server listening on 0.0.0.0 port 22.
+Sep 24 00:25:11 Kali sshd[27716]: Server listening on :: port 22.
+Sep 24 00:25:11 Kali systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+
+
+5) Habilitar e startar o sshd para funcionar em boot time:
+---------------------------------------------------------------
+$ sudo systemctl enable ssh.service
+Synchronizing state of ssh.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable ssh
+
+
+6) O sshd está habilitado para boot time?:
+---------------------------------------------------------------
+$ sudo systemctl is-enabled ssh.service
+enabled
+
